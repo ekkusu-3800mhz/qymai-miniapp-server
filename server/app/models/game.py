@@ -22,6 +22,6 @@ class Cabinet(models.Model):
     enablePlayerCount = models.BooleanField(null=False, default=False)
     playerCount = models.IntegerField(null=False, default=0)
     maxCapacity = models.IntegerField(null=False, default=0)
-    playerCountUpdateTime = models.DateTimeField(null=False)
+    playerCountUpdateTime = models.DateTimeField(null=True)
     createTime = models.DateTimeField(null=False, auto_now_add=True)
     updateTime = models.DateTimeField(null=False, auto_now=True)
