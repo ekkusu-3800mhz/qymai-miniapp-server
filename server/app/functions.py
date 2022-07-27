@@ -1,10 +1,16 @@
 from typing import Dict
+from django.http import HttpResponse
 import json
 
 
-def makeResponse(status: int, data: Dict) -> str:
-    res = {
-        "status": status,
-        "data": data,
-    }
-    return json.dumps(res)
+def response(status: int, data: Dict) -> HttpResponse:
+    if data:
+        res = {
+            "status": status,
+            "data": data,
+        }
+    else:
+        res = {
+            "status": status,
+        }
+    return HttpResponse(json.dumps(res))
