@@ -1,0 +1,5 @@
+__pycache__
+.gitignore
+LICENSE
+../server/.env.example
+container.config.json

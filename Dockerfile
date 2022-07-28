@@ -8,7 +8,7 @@ RUN apt install gcc ca-certificates build-essential \
 python3 python3-dev python3-pip \
 python3-cffi default-libmysqlclient-dev -y
 
-COPY ../server /app
+COPY ./server /app
 
 WORKDIR /app
 
