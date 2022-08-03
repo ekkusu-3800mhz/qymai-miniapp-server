@@ -48,6 +48,7 @@ class ShopInfoView(View):
                     'id': shop.id,
                     'name': shop.name,
                     'address': shop.address,
+                    'location': shop.fixedLocation,
                     'description': shop.description,
                     'creditPrice': shop.creditPrice,
                     'businessTime': shop.businessTime,

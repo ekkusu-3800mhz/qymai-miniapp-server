@@ -1,12 +1,6 @@
 .vscode
 
 __pycache__
-server/.env
-server/app/migrations/*
-!server/app/migrations/__init__.py
-
-miniapp/node_modules/*
-miniapp/package-lock.json
-
-manager/node_modules/*
-manager/package-lock.json
+.env
+app/migrations/*
+!app/migrations/__init__.py
