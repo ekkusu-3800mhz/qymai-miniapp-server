@@ -20,7 +20,7 @@ from app.views.shop import ShopListView, ShopInfoView
 
 
 urlpatterns = [
-    path("init/", InitDataView.as_view()),
+    #path("init/", InitDataView.as_view()),
     path("shop/list", ShopListView.as_view()),
     path("shop/info", ShopInfoView.as_view()),
 ]
