@@ -1,4 +1,5 @@
 from typing import List
+from django.utils import timezone
 from django.views import View
 from django.http import HttpRequest, HttpResponse
 from app.functions import response
@@ -63,7 +64,7 @@ class CabinetInfo(View):
                     'enablePlayerCount': c.enablePlayerCount,
                     'playerCount': c.playerCount,
                     'maxCapacity': c.maxCapacity,
-                    'updateTime': c.playerCountUpdateTime,
+                    'updateTime': None if not c.playerCountUpdateTime else timezone.make_naive(c.playerCountUpdateTime).strftime('%Y-%m-%d %H:%M:%S'),
                     'remark': c.remark,
                 })
             res = {
