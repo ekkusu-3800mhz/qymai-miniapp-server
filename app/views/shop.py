@@ -5,7 +5,7 @@ from app.functions import response
 from app.models import Shop, Cabinet
 
 
-class ShopListView(View):
+class ShopList(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         shops: List = list(Shop.objects.all())
@@ -23,7 +23,7 @@ class ShopListView(View):
         return response(status=200, data=res)
 
 
-class ShopInfoView(View):
+class ShopInfo(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         id = request.GET.get('shop_id')
@@ -45,7 +45,7 @@ class ShopInfoView(View):
         return response(status=404, data={"error": "未找到相应的店铺条目"})
 
 
-class CabinetInfoView(View):
+class CabinetInfo(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         id = request.GET.get('shop_id')

@@ -1,60 +1,54 @@
 from typing import List
+from django.utils import timezone
 from django.views import View
 from django.http import HttpRequest, HttpResponse
 from app.functions import response
-from app.models import Shop, Cabinet
+from app.models import Cabinet
+from app.forms.queue import UpdatePlayerForm
+import json
 
 
-class ShopListView(View):
+class CabinetList(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
-        shops: List = list(Shop.objects.all())
+        cabs: List = list(Cabinet.objects.all())
         l: List = []
-        for s in shops:
+        for c in cabs:
             l.append({
-                'id': s.id,
-                'name': s.name,
-                'address': s.address,
-                'location': s.fixedLocation,
+                'id': c.id,
+                'shop': {
+                    'name': c.shop.name,
+                    'address': c.shop.address,
+                    'location': c.shop.fixedLocation,
+                },
+                'game': c.game.name,
+                'version': c.version,
+                'number': c.number,
+                'enablePlayerCount': c.enablePlayerCount,
+                'playerCount': c.playerCount,
+                'maxCapacity': c.maxCapacity,
+                'updateTime': None if not c.playerCountUpdateTime else timezone.make_naive(c.playerCountUpdateTime).strftime('%Y-%m-%d %H:%M:%S'),
             })
         res = {
-            'shopList': l,
+            'cabinetList': l,
         }
         return response(status=200, data=res)
 
 
-class ShopInfoView(View):
+class UpdatePlayer(View):
 
-    def get(self, request: HttpRequest) -> HttpResponse:
-        id = request.GET.get('shop_id')
-        if Shop.objects.filter(id=id):
-            shop: Shop = Shop.objects.get(id=id)
-            cabinets: List = list(Cabinet.objects.filter(shop=shop))
-            l: List = []
-            for c in cabinets:
-                l.append({
-                    'id': c.id,
-                    'version': c.version,
-                    'credit': c.credit,
-                    'number': c.number,
-                    'enablePlayerCount': c.enablePlayerCount,
-                    'playerCount': c.playerCount,
-                    'maxCapacity': c.maxCapacity,
-                    'updateTime': c.playerCountUpdateTime,
-                    'remark': c.remark,
-                })
-            res = {
-                'shopInfo': {
-                    'id': shop.id,
-                    'name': shop.name,
-                    'address': shop.address,
-                    'description': shop.description,
-                    'creditPrice': shop.creditPrice,
-                    'businessTime': shop.businessTime,
-                    'remark': shop.remark,
-                },
-                'cabinetList': l,
-            }
-            return response(status=200, data=res)
-        return response(status=404, data={"error": "未找到相应的店铺条目"})
-
+    def post(self, request: HttpRequest) -> HttpResponse:
+        form = UpdatePlayerForm(request.POST)
+        if not form.is_valid():
+            return response(status=400, data={"error": json.loads(form.errors.as_json())})
+        data = form.cleaned_data
+        if Cabinet.objects.filter(id=data['cabinet_id']):
+            cabinet = Cabinet.objects.get(id=data['cabinet_id'])
+            if cabinet.enablePlayerCount:
+                if data['player_count'] <= 0:
+                    cabinet.playerCount = 0
+                else:
+                    cabinet.playerCount = data['player_count']
+            cabinet.playerCountUpdateTime = timezone.now()
+            cabinet.save()
+        return response(status=200, data={})

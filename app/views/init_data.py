@@ -5,7 +5,7 @@ from app.functions import response
 from app.models import Shop, Game, Cabinet
 
 
-class InitDataView(View):
+class InitData(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         if DEBUG:

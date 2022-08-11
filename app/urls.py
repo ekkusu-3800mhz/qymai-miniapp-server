@@ -15,13 +15,16 @@ Including another URLconf
 """
 
 from django.urls import path
-from app.views.init_data import InitDataView
-from app.views.shop import ShopListView, ShopInfoView, CabinetInfoView
+import app.views.init_data as initData
+import app.views.shop as shop
+import app.views.queue as queue
 
 
 urlpatterns = [
-    #path("init/", InitDataView.as_view()),
-    path("shop/list", ShopListView.as_view()),
-    path("shop/info", ShopInfoView.as_view()),
-    path("shop/cabinet", CabinetInfoView.as_view()),
+    #path("init/", initData.InitData.as_view()),
+    path("shop/list", shop.ShopList.as_view()),
+    path("shop/info", shop.ShopInfo.as_view()),
+    path("shop/cabinet", shop.CabinetInfo.as_view()),
+    path("queue/list", queue.CabinetList.as_view()),
+    path("queue/update", queue.UpdatePlayer.as_view()),
 ]
