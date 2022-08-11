@@ -13,8 +13,16 @@ class Shop(models.Model):
     updateTime = models.DateTimeField(null=False, auto_now=True)
 
 
+class Game(models.Model):
+    name = models.CharField(max_length=200, null=False)
+    alias = models.CharField(max_length=200, null=False)
+    createTime = models.DateTimeField(null=False, auto_now_add=True)
+    updateTime = models.DateTimeField(null=False, auto_now=True)
+
+
 class Cabinet(models.Model):
     shop = models.ForeignKey("Shop", on_delete=models.CASCADE)
+    game = models.ForeignKey("Game", on_delete=models.CASCADE)
     version = models.CharField(max_length=100, null=False)
     credit = models.IntegerField(null=True)
     number = models.IntegerField(null=True)
