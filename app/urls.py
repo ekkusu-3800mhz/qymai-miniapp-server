@@ -16,11 +16,12 @@ Including another URLconf
 
 from django.urls import path
 from app.views.init_data import InitDataView
-from app.views.shop import ShopListView, ShopInfoView
+from app.views.shop import ShopListView, ShopInfoView, CabinetInfoView
 
 
 urlpatterns = [
     #path("init/", InitDataView.as_view()),
     path("shop/list", ShopListView.as_view()),
     path("shop/info", ShopInfoView.as_view()),
+    path("shop/cabinet", CabinetInfoView.as_view()),
 ]

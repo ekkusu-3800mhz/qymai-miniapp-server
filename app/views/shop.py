@@ -29,11 +29,34 @@ class ShopInfoView(View):
         id = request.GET.get('shop_id')
         if Shop.objects.filter(id=id):
             shop: Shop = Shop.objects.get(id=id)
+            res = {
+                'shopInfo': {
+                    'id': shop.id,
+                    'name': shop.name,
+                    'address': shop.address,
+                    'location': shop.fixedLocation,
+                    'description': shop.description,
+                    'creditPrice': shop.creditPrice,
+                    'businessTime': shop.businessTime,
+                    'remark': shop.remark,
+                },
+            }
+            return response(status=200, data=res)
+        return response(status=404, data={"error": "未找到相应的店铺条目"})
+
+
+class CabinetInfoView(View):
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        id = request.GET.get('shop_id')
+        if Shop.objects.filter(id=id):
+            shop: Shop = Shop.objects.get(id=id)
             cabinets: List = list(Cabinet.objects.filter(shop=shop))
             l: List = []
             for c in cabinets:
                 l.append({
                     'id': c.id,
+                    'game': c.game.name,
                     'version': c.version,
                     'credit': c.credit,
                     'number': c.number,
