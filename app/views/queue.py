@@ -36,6 +36,28 @@ class CabinetList(View):
         return response(status=200, data=res)
 
 
+class CabinetInfo(View):
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        id = request.GET.get('cabinet_id')
+        if Cabinet.objects.filter(id=id):
+            cab: Cabinet = Cabinet.objects.get(id=id)
+            info = {
+                'id': cab.id,
+                'shop': cab.shop.name,
+                'game': cab.game.name,
+                'enablePlayerCount': cab.enablePlayerCount,
+                'playerCount': cab.playerCount,
+                'maxCapacity': cab.maxCapacity,
+                'updateTime': None if not cab.playerCountUpdateTime else timezone.make_naive(cab.playerCountUpdateTime).strftime('%Y-%m-%d %H:%M:%S'),
+            }
+            res = {
+                'cabinetInfo': info,
+            }
+            return response(status=200, data=res)
+        return response(status=404, data={"error": "未找到相应的机台条目"})
+
+
 class UpdatePlayer(View):
 
     def post(self, request: HttpRequest) -> HttpResponse:

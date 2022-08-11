@@ -26,5 +26,6 @@ urlpatterns = [
     path("shop/info", shop.ShopInfo.as_view()),
     path("shop/cabinet", shop.CabinetInfo.as_view()),
     path("queue/list", queue.CabinetList.as_view()),
+    path("queue/info", queue.CabinetInfo.as_view()),
     path("queue/update", queue.UpdatePlayer.as_view()),
 ]
