@@ -17,6 +17,7 @@ class CabinetList(View):
             l.append({
                 'id': c.id,
                 'shop': {
+                    'id': c.shop.id,
                     'name': c.shop.name,
                     'address': c.shop.address,
                     'location': c.shop.fixedLocation,
