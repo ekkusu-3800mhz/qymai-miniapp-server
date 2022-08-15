@@ -46,6 +46,7 @@ class CabinetInfo(View):
                 'id': cab.id,
                 'shop': cab.shop.name,
                 'game': cab.game.name,
+                'number': cab.number,
                 'enablePlayerCount': cab.enablePlayerCount,
                 'playerCount': cab.playerCount,
                 'maxCapacity': cab.maxCapacity,
