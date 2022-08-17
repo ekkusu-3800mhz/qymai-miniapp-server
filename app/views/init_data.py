@@ -19,7 +19,7 @@ class InitData(View):
             t.save()
             j.save()
             d.save()
-            Cabinet(shop=n, game=game, version='CH1.20-B', credit=5, number=1, enablePlayerCount=True, maxCapacity=8, remark='机况随着机台位置变更会有不同，若出现吃音请立即和店员联系').save()
+            Cabinet(shop=n, game=game, version='CH1.20-B', credit=5, number=2, enablePlayerCount=True, maxCapacity=8, remark='机况随着机台位置变更会有不同，若出现吃音请立即和店员联系').save()
             Cabinet(shop=t, game=game, version='CH1.20-B', credit=0, number=1, enablePlayerCount=True, maxCapacity=8, remark='左侧（1P）4号键震键，待修').save()
             Cabinet(shop=j, game=game, version='CH1.20-B', credit=4, number=1, enablePlayerCount=True, maxCapacity=8).save()
             Cabinet(shop=d, game=game, version='CH1.20-B', credit=4, number=1, enablePlayerCount=True, maxCapacity=8).save()
