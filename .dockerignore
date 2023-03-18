@@ -1,5 +1,5 @@
 __pycache__
 .gitignore
 LICENSE
-.env.example
 container.config.json
+daily_clear.py
