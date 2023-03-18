@@ -18,6 +18,7 @@ from django.urls import path
 import app.views.init_data as initData
 import app.views.shop as shop
 import app.views.queue as queue
+import app.views.bot as bot
 
 
 urlpatterns = [
@@ -28,4 +29,6 @@ urlpatterns = [
     path("queue/list", queue.CabinetList.as_view()),
     path("queue/info", queue.CabinetInfo.as_view()),
     path("queue/update", queue.UpdatePlayer.as_view()),
+    path("bot/queue_info", bot.CabinetList.as_view()),
+    path("bot/queue_update", bot.UpdatePlayer.as_view()),
 ]
