@@ -23,7 +23,9 @@ class Game(models.Model):
 class Cabinet(models.Model):
     shop = models.ForeignKey("Shop", on_delete=models.CASCADE)
     game = models.ForeignKey("Game", on_delete=models.CASCADE)
-    version = models.CharField(max_length=100, null=False)
+    name = models.CharField(max_length=100, null=False)
+    uniqueName = models.CharField(max_length=20, null=False, default="")
+    version = models.CharField(max_length=100, null=False, default="")
     credit = models.IntegerField(null=True)
     number = models.IntegerField(null=True)
     remark = models.TextField(null=True)
