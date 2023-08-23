@@ -3,15 +3,16 @@ from django.utils import timezone
 from django.views import View
 from django.http import HttpRequest, HttpResponse
 from app.functions import response
-from app.models import Cabinet
+from app.models import Game, Cabinet
 from app.forms.bot import UpdatePlayerForm
 import json
 
 
-class CabinetList(View):
+class MaimaiCabinetList(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
-        cabs: List = list(Cabinet.objects.all())
+        maimai = Game.objects.get(alias='maimaidx_cn')
+        cabs: List = list(Cabinet.objects.filter(game=maimai))
         l: List = []
         for c in cabs:
             l.append({
@@ -27,7 +28,29 @@ class CabinetList(View):
             'cabinetList': l,
         }
         return response(status=200, data=res)
+    
 
+class ChunithmCabinetList(View):
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        chunithm = Game.objects.get(alias='chunithm_cn')
+        cabs: List = list(Cabinet.objects.filter(game=chunithm))
+        l: List = []
+        for c in cabs:
+            l.append({
+                'name': c.name,
+                'uniqueName': c.uniqueName,
+                'number': c.number,
+                'playerCount': c.playerCount,
+                'maxCapacity': c.maxCapacity,
+                'updateTime': None if not c.playerCountUpdateTime else timezone.make_naive(c.playerCountUpdateTime).strftime('%Y-%m-%d %H:%M:%S'),
+            })
+        res = {
+            'error': None,
+            'cabinetList': l,
+        }
+        return response(status=200, data=res)
+    
 
 class UpdatePlayer(View):
 
@@ -38,7 +61,9 @@ class UpdatePlayer(View):
         data = form.cleaned_data
         if data['player_count'] > 20:
             return response(status=403, data={"error": "单次加卡不可超过20张，若出现超过20人排队请分批添加。"})
-        res = {}
+        res = {
+            'error': None,
+        }
         if Cabinet.objects.filter(uniqueName=data['unique_name']):
             cabinet = Cabinet.objects.get(uniqueName=data['unique_name'])
             if data['player_count'] <= 0:
