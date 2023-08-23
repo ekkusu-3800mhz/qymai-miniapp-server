@@ -29,6 +29,7 @@ urlpatterns = [
     path("queue/list", queue.CabinetList.as_view()),
     path("queue/info", queue.CabinetInfo.as_view()),
     path("queue/update", queue.UpdatePlayer.as_view()),
-    path("bot/queue_info", bot.CabinetList.as_view()),
-    path("bot/queue_update", bot.UpdatePlayer.as_view()),
+    path("bot/queue/maimai", bot.MaimaiCabinetList.as_view()),
+    path("bot/queue/chunithm", bot.ChunithmCabinetList.as_view()),
+    path("bot/queue/update", bot.UpdatePlayer.as_view()),
 ]
